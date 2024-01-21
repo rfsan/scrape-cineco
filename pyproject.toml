@@ -1,0 +1,47 @@
+[project]
+name = "scrape-cineco"
+version = "0.0.1"
+requires-python = ">=3.12"
+# Since this project is an app I use pyproject.lock to lock the versions
+dependencies = [
+    "pydantic-settings",
+    "httpx",
+    "beautifulsoup4",
+    "lxml",
+    "pydantic",
+    "boto3",
+]
+
+[project.optional-dependencies]
+tests = ["pytest"]
+dev = ["pre-commit", "pip-tools"]
+all = ["scrape-cineco[dev,tests]"]
+
+[project.scripts]
+scrape-cineco = "scrape_cineco.__main__:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.pip-tools]
+quiet = true
+annotate = false
+extra = ["all"]
+output-file = "pyproject.lock"
+strip-extras = true
+# hack
+unsafe-package = ["scrape-cineco"]
+allow-unsafe = false
+
+[tool.ruff]
+select = [
+    "F",    # Pyflakes
+    "E",    # pycodestyle error
+    "W",    # pycodestyle warning
+    "C90",  # mccabe
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "RUF",  # Ruff-specific rules
+]

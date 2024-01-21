@@ -1,0 +1,15 @@
+# Python
+.venv
+*.egg-info
+__pycache__
+
+# Secrets and variables
+# Ignore all files that start with .env but keep .env.template
+.env*
+!.env.template
+secrets
+# keep variables directory for public settings
+!variables/.env.*.public
+
+# Start temporal files or directories with _tmp_ to ignore them
+_tmp_*
