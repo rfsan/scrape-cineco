@@ -1,3 +1,5 @@
+name: Scrape Cineco latest data
+
 on:
   workflow_dispatch:
   schedule:
@@ -5,7 +7,7 @@ on:
     - cron: '16 9 * * *'
 
 jobs:
-  notify:
+  scrape:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,7 +18,7 @@ jobs:
           cache: 'pip'
           cache-dependency-path: 'pyproject.lock'
       - run: pip install -c pyproject.lock .
-      - run: movie-alerts
+      - run: scrape-cineco
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
