@@ -92,7 +92,7 @@ def upload_cartelera_to_s3():
         Body=json.dumps(
             [movie.model_dump(mode="json") for movie in cartelera], indent=4
         ),
-        Bucket=settings.bucket_name.get_secret_value(),
+        Bucket=settings.bucket.get_secret_value(),
         Key=f"cineco/cartelera/{datetime_col}.json",
     )
 

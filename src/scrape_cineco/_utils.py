@@ -22,7 +22,4 @@ def spanish_month_to_number(month: str) -> str:
     return SPANISH_MONTH_TO_NUMBER_MAP[month]
 
 
-AWS_SESSION = boto3.Session(
-    aws_access_key_id=settings.aws_access_key_id.get_secret_value(),
-    aws_secret_access_key=settings.aws_secret_access_key.get_secret_value(),
-)
+AWS_SESSION = boto3.session.Session(profile_name=settings.aws_profile)
