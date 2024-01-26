@@ -7,10 +7,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     local_tmp_dir: Path = "data/_tmp_"
-    aws_profile: str = "personal"
     # secrets
-    # TODO should I have a bucket for all the scrape data? This would allow better
-    #      permissions (just write to the bucket)
     bucket: SecretStr
 
     model_config = SettingsConfigDict(

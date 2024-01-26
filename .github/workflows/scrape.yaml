@@ -34,5 +34,3 @@ jobs:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
       - run: scrape-cineco
-        env:
-          AWS_PROFILE: default

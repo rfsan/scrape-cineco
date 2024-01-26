@@ -1,13 +1,14 @@
 import datetime as dt
 import json
 
+import boto3
 import httpx
 from bs4 import BeautifulSoup
 from pydantic import BaseModel
 
 from scrape_cineco import settings
 
-from ._utils import AWS_SESSION, spanish_month_to_number
+from ._utils import spanish_month_to_number
 
 CINECO_URL = "https://www.cinecolombia.com"
 
@@ -84,7 +85,7 @@ def parse_cartelera() -> list[CarteleraMovie]:
 
 def upload_cartelera_to_s3():
     cartelera = parse_cartelera()
-    s3 = AWS_SESSION.client("s3")
+    s3 = boto3.client("s3")
     colombia_tz = dt.timezone(dt.timedelta(hours=-5))
     datetime_col = dt.datetime.now(colombia_tz)
     # TODO: Save metadata

@@ -1,7 +1,3 @@
-import boto3
-
-from scrape_cineco import settings
-
 SPANISH_MONTH_TO_NUMBER_MAP = {
     "ene": "01",
     "feb": "02",
@@ -20,6 +16,3 @@ SPANISH_MONTH_TO_NUMBER_MAP = {
 
 def spanish_month_to_number(month: str) -> str:
     return SPANISH_MONTH_TO_NUMBER_MAP[month]
-
-
-AWS_SESSION = boto3.session.Session(profile_name=settings.aws_profile)
