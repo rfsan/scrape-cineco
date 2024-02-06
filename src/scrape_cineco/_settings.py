@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     local_tmp_dir: Path = "data/_tmp_"
     # secrets
     bucket: SecretStr
+    telegram_token: SecretStr
 
     model_config = SettingsConfigDict(
         env_file=(".env",), extra="ignore", hide_input_in_errors=True
