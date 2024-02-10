@@ -18,7 +18,6 @@ from ._utils import (
     get_soup,
     send_telegram_message,
     spanish_month_to_number,
-    get_telegram_updates
 )
 
 
@@ -68,7 +67,8 @@ class Cineco(BaseModel):
 
             status = urlpath
             # find if it's premiere
-            if movie.find("span", class_="movie-item__badge"):
+            badge = movie.find("span", class_="movie-item__badge")
+            if badge and badge.text == "Estreno":
                 status = "premiere"
 
             movies.append(
