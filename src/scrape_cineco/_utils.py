@@ -39,7 +39,8 @@ def send_telegram_message(message: str):
         f"https://api.telegram.org/bot{settings.telegram_token.get_secret_value()}/sendMessage",
         json={
             "chat_id": 6944099368,
-            "text": message,
+            # https://core.telegram.org/bots/api#formatting-options
+            "text": message.replace(" - ", " \\- "),
             "parse_mode": "MarkdownV2",
         },
     )
