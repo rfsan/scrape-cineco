@@ -6,16 +6,14 @@ requires-python = ">=3.12"
 dependencies = [
     "pydantic-settings",
     "httpx",
-    "beautifulsoup4",
-    "lxml",
+    "selectolax",
     "pydantic",
     "boto3",
 ]
 
 [project.optional-dependencies]
-tests = ["pytest"]
 dev = ["pre-commit", "pip-tools"]
-all = ["scrape-cineco[dev,tests]"]
+all = ["scrape-cineco[dev]"]
 
 [project.scripts]
 scrape-cineco = "scrape_cineco.__main__:main"
