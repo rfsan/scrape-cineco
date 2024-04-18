@@ -33,4 +33,5 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - run: scrape-cineco
         env:
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}

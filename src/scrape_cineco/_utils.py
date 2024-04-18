@@ -1,13 +1,20 @@
 import httpx
-from bs4 import BeautifulSoup
 from pydantic.json import pydantic_encoder
 
 from scrape_cineco import settings
 
 JSON_KWARGS = dict(ensure_ascii=False, indent=2, default=pydantic_encoder)
+HEADERS = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",  # noqa: E501
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": "en-US,en;q=0.6",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",  # noqa: E501
+    "Referer": "https://www.google.com/",
+}
 
 
 def spanish_month_to_number(month: str) -> str:
+    month = month.lower()[:3]
     return {
         "ene": "01",
         "feb": "02",
@@ -24,38 +31,12 @@ def spanish_month_to_number(month: str) -> str:
     }[month]
 
 
-def get_soup(url: str) -> str:
-    r = httpx.get(url)
-    return BeautifulSoup(r.text, "lxml")
-
-
-def save_html(url: str, filename: str) -> None:
-    with open(f"{settings.local_tmp_dir}/{filename}.html", "w") as f:
-        f.write(get_soup(url).prettify())
-
-
-def send_telegram_message(message: str):
+def ntfy_notification():
     r = httpx.post(
-        f"https://api.telegram.org/bot{settings.telegram_token.get_secret_value()}/sendMessage",
-        json={
-            "chat_id": 6944099368,
-            # https://core.telegram.org/bots/api#formatting-options
-            "text": message.replace(" - ", " \\- "),
-            "parse_mode": "MarkdownV2",
+        f"https://ntfy.sh/{settings.ntfy_topic.get_secret_value()}",
+        data="Actualizadas las películas de Cineco",
+        headers={
+            "Click": f"https://gist.github.com/rfsan/{settings.gist_id.get_secret_value()}"
         },
     )
     r.raise_for_status()
-
-
-def get_telegram_updates():
-    r = httpx.get(
-        f"https://api.telegram.org/bot{settings.telegram_token.get_secret_value()}/getUpdates"
-    )
-    r.raise_for_status()
-    for update in r.json()["result"]:
-        chat = update["message"]["chat"]
-        print(chat["first_name"], chat["id"])
-
-
-if __name__ == "__main__":
-    get_telegram_updates()
