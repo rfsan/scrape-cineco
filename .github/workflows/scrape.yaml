@@ -35,3 +35,4 @@ jobs:
         env:
           GIST_ID: ${{ secrets.GIST_ID }}
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          GH_TOKEN: ${{ github.token }}
