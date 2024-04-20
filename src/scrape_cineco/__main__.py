@@ -177,7 +177,7 @@ def build_compare_message(  # noqa: C901
     # Movies in Cartelera
     for movie in sorted(
         newer_grouped[MovieStatus.CARTELERA],
-        key=lambda m: m.premiere_date,
+        key=lambda m: (m.premiere_date, m.title),
         reverse=True,
     ):
         movie_message = "- "
@@ -198,7 +198,10 @@ def build_compare_message(  # noqa: C901
     pronto_by_release_date = {
         k: list(g)
         for k, g in groupby(
-            sorted(newer_grouped[MovieStatus.PRONTO], key=lambda m: m.premiere_date),
+            sorted(
+                newer_grouped[MovieStatus.PRONTO],
+                key=lambda m: (m.premiere_date, m.title),
+            ),
             key=lambda m: m.premiere_date,
         )
     }
